@@ -1,0 +1,29 @@
+﻿<ion-view view-title="Δημοσίευση">
+    <ion-content>
+
+        <div class="list">
+
+            <ion-checkbox ng-repeat="publisher in publishers"
+                          ng-model="publisher.IsSelected"
+                          ng-checked="publisher.IsSelected">
+                <div ng-if="!(publisher.Name.length  === 0)"> 
+                    {{ publisher.Name }}
+                </div>
+                <br />
+                <div ng-if="!(publisher.ImageUri.length  === 0)">
+                    <img ng-src="{{publisher.ImageUri}}" style="height: 40px; width: 140px;">
+                </div>
+            </ion-checkbox>
+
+        </div>
+
+        <div style="" class="button-bar">
+            <button style="" ng-click="requestPuplishProperty()" class="button button-outline button-positive">publish</button>
+            <button style="" class="button button-outline button-positive">cancel</button>
+        </div>
+
+        <div style="height: 100px;" class="spacer"></div>
+
+
+    </ion-content>
+</ion-view>

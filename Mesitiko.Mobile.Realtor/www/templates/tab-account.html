@@ -1,0 +1,27 @@
+<ion-view view-title="Account">
+    <ion-content>
+        <!--<i class="icon ion-camera"></i>-->
+
+        <div class="list card">
+
+            <p> photo quality</p>
+            <div class="range">
+                <input type="range" name="volume" ng-model="settings.photoQuality">
+                <p> {{settings.photoQuality}}</p>
+            </div>
+            <div>
+
+                <p> photo size</p>
+                <div class="range">
+
+                    <input type="range" name="volume" min="0" max="1000" ng-model="settings.photoSize">
+                    <p> {{settings.photoSize}}</p>
+                </div>
+            </div>
+
+            <ion-toggle ng-model="settings.DebuggingLogg" toggle-class="toggle-calm">Enabling Debugging Data</ion-toggle>
+
+
+        </div>
+    </ion-content>
+</ion-view>

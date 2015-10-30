@@ -1,0 +1,18 @@
+﻿<ion-view view-title="Pictures">
+    <ion-content>
+        <br><br>
+        <button class="button button-full button-positive" ng-click="addImage()">
+            <i class="icon ion-camera">
+                Add image
+            </i>
+
+        </button><br><br>
+        <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="image in images"
+                  type="item-text-wrap">
+
+            <img ng-src="{{urlForImage(image)}}">
+
+        </ion-item>
+
+    </ion-content>
+</ion-view>

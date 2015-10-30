@@ -1,0 +1,21 @@
+﻿<ion-view view-title="Ακινητα">
+    <ion-content>
+        <button class="button button-outline button-positive" ng-click="AddNewPropertyCommand()">
+            <i class="icon ion-android-add">   Νεό Ακίνητο</i>
+        </button><br><br>
+        <ion-refresher pulling-text="Pull to refresh..."
+                       on-refresh="doRefreshProperties()">
+        </ion-refresher>
+        <ion-list>
+            <ion-item class="item-remove-animate item-thumbnail-left" ng-repeat="property in properties"
+                      type="item-text-wrap" href="#/tab/properties/{{property.LocalID}}">
+                <img ng-src="{{property.FrontImagePath}}">
+                <h2>{{property.Name}}</h2>
+                <p>{{property.Description}}</p>
+                <!--<button  ngShow="!property.IsFromServer" class="button button-clear button-positive" ng-click="TrySyncProperty()">
+                    <i class="icon ion-ios-loop">Δεν ειναι συχρονισμενο</i>
+                </button><br><br>-->
+             </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

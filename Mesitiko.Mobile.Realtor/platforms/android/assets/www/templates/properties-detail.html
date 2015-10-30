@@ -1,0 +1,170 @@
+﻿
+<ion-view view-title="{{property.Name}}">
+    <ion-content class="padding">
+        <div class="list card">
+            <div class="item item-divider">
+                <table style="undefined; table-layout:inherit;">
+                    <tr>
+                        <td class="tg-yw4l">{{property.Name}}</td>
+                        <td class="tg-yw4l"><button class="button button-icon icon ion-compose"></button></td>
+                    </tr>
+                </table>
+            </div>
+            <img ng-src="{{property.FrontImagePath}}" ng-click="openImageModal()" style="width: 100px; height: 150px">
+            <button class="button button-icon icon ion-map" ng-click="showLocation()"> </button>
+
+            <h4 style="background-color: dimgrey;color:white">Όνομα</h4>
+            <span>{{property.Name}} </span>
+            <h4 style="background-color: dimgrey;color:white">Περιγραφή</h4>
+            <span>{{property.Description}}</span>
+
+            <br />
+            <br /><br /><br />
+            <div class="button-bar">
+                <button ngShow="!property.IsFromServer" class="button button-icon icon ion-ios-loop" ng-click="TrySyncProperty()"></button>
+                <button class="button button-icon  icon ion-ios-calendar" ng-click="propertyAgendaModalShow()">
+                    <!--Συνάντησεις-->
+                </button>
+                <button class="button button-icon  icon ion-person-stalker" ng-click="prospectmodalShow()">
+                    <!--Ενδιαφερόμενοι-->
+                </button>
+                <button class="button button-icon  icon ion-person-add" ng-click="prospectsAdditionmodalShow()">
+                    <!--Προσθηκη-->
+                </button>
+            </div>
+        </div>
+        <button class="button button-outline button-positive icon ion-ios-cloud-upload-outline" ng-click="openPublishProperty()">
+            Δημοσίευση
+        </button><br><br>
+        <div>
+            <!--<p>Aποστολή στο google Drive</p>
+            <img ng-src="http://www.sketchappsources.com/resources/source-image/googledrive_logo.png" style="width: 60px; height: 50px;" />-->
+
+        </div>
+        <script id="image-modal.html" type="text/ng-template">
+            <div class="modal image-modal transparent"
+                 ng-click="closeModal()">
+                <ion-slide-box on-slide-changed="slideChanged(index)"
+                               show-pager="false">
+                    <ion-slide ng-repeat="oImage in  property.propertiesPhotos">
+
+                        <img ng-src="{{oImage.IMagePath}}" class="fullscreen-image" />
+                        <h2 style="background-color: dimgrey;color:white">{{oImage.Name}}</h2>
+                        <h4 style="background-color: dimgrey;color:white">{{oImage.Description}}</h4>
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
+        </script>
+
+        <script id="prospects.html" type="text/ng-template">
+            <div class="modal">
+                <ion-header-bar>
+                    <h1 class="title">Ενδιαφερόμενοι</h1>
+                </ion-header-bar>
+                <ion-content>
+
+                    <ul class="list">
+                        <li class="item" ng-repeat="prospect in prospects">
+                            <div class="row">
+                                <h2 style="background-color: dimgrey;color:white;width:100%">
+                                    {{prospect.Name}} papanikolaou
+                                </h2>
+                            </div>
+                            <div class="row">
+
+                                <div class="col col-25">
+                                    <h4 style="background-color: black;color:white;height:100%"> </h4>
+                                    <!--<h2>{{prospect.Name}}</h2>-->
+
+                                    <button class="button button-icon icon ion-android-call" ng-click="CallProspect(prospect)" />
+
+                                </div>
+                                <div class="col col-75">
+                                    Showing at :
+                                    <h2 style="color:blue">  {{prospect.event.start}}</h2>
+                                    <button class="button button-icon icon ion-android-calendar" ng-click="DisplayMeeting(prospect)" />
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="button-bar">
+                        <button class="button button-outline button-positive" ng-click="SelectLocation()">Επιλογή</button>
+                        <button class="button button-outline button-positive" ng-click="CancelLocation()">Ακύρωση</button>
+                    </div>
+                </ion-content>
+            </div>
+        </script>
+
+        <script id="prospectsAddition.html" type="text/ng-template">
+            <div class="modal">
+                <ion-header-bar>
+                    <h1 class="title">Προσθηκη Ενδιαφερόμενου</h1>
+                </ion-header-bar>
+                <ion-content>
+
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <span class="input-label">Όνομα</span>
+                            <input type="text" placeholder="Name" ng-model="propspect.Name">
+                        </label>
+                        <label class="item item-input item-floating-label">
+                            <span class="input-label">Σημειώσεις</span>
+                            <input type="text" placeholder="Discription" ng-model="propspect.Description">
+                        </label>
+                        <label class="item item-input item-floating-label">
+                            <span class="input-label">Κινήτο</span>
+                            <input type="text" placeholder="Mobile" ng-model="propspect.lastCall.number">
+                        </label>
+                        <button class="button button-icon icon ion-iphone" ng-click="searchCallLog()">Αναζητηση απο Κατάλογο </button>
+                        <button class="button button-icon icon ion-android-calendar" ng-click="ScheduleShowing()">Showing</button>
+
+                    </div>
+
+                    <div class="button-bar">
+                        <button class="button button-outline button-positive" ng-click="AddProspect()">Προσθήκη</button>
+                        <button class="button button-outline button-positive" ng-click="CancelProspectAdditon()">Ακύρωση</button>
+                    </div>
+                </ion-content>
+            </div>
+        </script>
+
+
+        <script id="meetingDetailsDisplay.html" type="text/ng-template">
+            <div class="modal">
+                <ion-header-bar>
+
+                    <h1 class="title">{{ SchedulingHeader }}</h1>
+                </ion-header-bar>
+
+                <br /><br /><br /><br />
+                <ion-content data-tap-disabled="true">
+
+                    <daypilot-calendar data-tap-disabled="true" id="dp" daypilot-config="meetingDetailsConfig" daypilot-events="SelectedEvent"></daypilot-calendar>
+
+                </ion-content>
+        </script>
+
+
+        <script id="map-modal.html" type="text/ng-template">
+            <div class="modal">
+                <ion-header-bar>
+                    <h1 class="title">Αναζητηση τοποθεσίας</h1>
+                </ion-header-bar>
+                <ion-content>
+
+                    <img ng-src="http://res.cloudinary.com/dm2qoxpig/image/upload/v1446072935/map_wvufnk.jpg" style="width:100%;height: 350px" ng-click="openImageModal(image)">
+
+
+                    <!--<div id="map" data-tap-disabled="true"></div>-->
+
+                    <div class="button-bar">
+                        <button class="button button-outline button-positive" ng-click="CancelLocation()">Επιλογή</button>
+                        <button class="button button-outline button-positive" ng-click="CancelLocation()">Ακύρωση</button>
+                    </div>
+                </ion-content>
+            </div>
+        </script>
+    </ion-content>
+</ion-view>
